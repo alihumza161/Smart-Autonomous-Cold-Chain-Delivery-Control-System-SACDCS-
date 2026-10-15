@@ -1,0 +1,7 @@
+The following rules complete the state model:
+- IDLE, NAVIGATING, AVOIDING_OBSTACLE, DELIVERING, and RETURNING may enter SAFE_MODE if a critical trigger occurs.
+- NAVIGATING, AVOIDING_OBSTACLE, DELIVERING, and RETURNING may enter LINK_LOST if communication supervision fails.
+- LINK_LOST must still monitor local sensors and battery conditions. A local critical event must not be ignored merely because Mission Control is unreachable.
+- SAFE_MODE must inhibit delivery release and ordinary mission commands.
+- Recovery from SAFE_MODE requires fault clearance and verification. Recovery from LINK_LOST requires link restoration, session validation, and safe command reconciliation.
+A robust implementation should model the robot's motion state and its communication/safety status as orthogonal state machines. This avoids ambiguous behaviour when communication loss and a safety fault occur simultaneously.
