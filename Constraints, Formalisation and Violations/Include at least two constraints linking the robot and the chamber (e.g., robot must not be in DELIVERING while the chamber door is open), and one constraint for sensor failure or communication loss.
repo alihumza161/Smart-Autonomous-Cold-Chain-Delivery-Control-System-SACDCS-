@@ -1,0 +1,12 @@
+1. Unit testing: Check Boolean guards, role permissions, sensor-range comparisons, and state-transition conditions.
+2. Integration testing: Test the robot controller, conservation chamber, Mission Control Centre, and ARLCCS interfaces together.
+3. Fault-injection and system testing: Simulate sensor failures, communication loss, contradictory readings, low battery, delayed messages, and a mechanically stuck barrier.
+For each test, record:
+- Initial state and input conditions.
+- Observed sensor and communication values.
+- Expected versus actual state transition.
+- Whether the constraint was satisfied.
+- Response time where a deadline applies.
+- Alarm, operator notification, and event-log evidence.
+- Pass/fail result and defect reference.
+A constraint should be considered verified only when the observed system behaviour satisfies the specified condition under both normal operation and relevant fault conditions.
