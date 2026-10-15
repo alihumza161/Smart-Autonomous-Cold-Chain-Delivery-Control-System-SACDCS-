@@ -1,0 +1,15 @@
+a) Can IDLE → DELIVERING happen?
+No. A delivery request must first be validated and accepted, followed by navigation to the assigned destination. Entering DELIVERING directly from IDLE violates FR-05 and the transition guards in ST-TR-06.
+Test: Issue a delivery-completion or destination event while the robot is idle. Expected result: no delivery action, no batch release, and a logged invalid transition.
+(b) What if AVOIDING_OBSTACLE has no transition back?
+The robot may remain stuck in AVOIDING_OBSTACLE, even after the obstacle is cleared. This is a liveness failure: the robot cannot resume navigation or complete the delivery.
+The design must provide a guarded transition back to NAVIGATING. If obstacle avoidance cannot complete within a defined timeout, the robot should stop safely and raise an alert rather than remain indefinitely in an undefined condition.
+(c) Can AVOIDING_OBSTACLE → DELIVERING occur?
+Not directly. The robot must first confirm that the obstacle is cleared, verify the route, and resume navigation. It may then reach the destination and pass the delivery safety guards.
+Allowing the direct transition could permit delivery while the robot is still handling an obstacle. This violates FR-04 and FR-05.
+(d) What happens when CriticalBattery occurs in AVOIDING_OBSTACLE or DELIVERING?
+These are important missing-transition cases.
+- During obstacle avoidance: The robot must stop unsafe obstacle-handling actions, assess whether controlled movement toward the warehouse remains safe, and either return or enter Safe Mode.
+- During delivery: The robot must abort or suspend delivery and prevent unsafe package release. It must enter Safe Mode or a specifically defined safe-abort state.
+- In both cases: The event must be recorded, the current mission status must be reported when possible, and the controller must not continue ordinary delivery by default.
+A complete verification plan must test every critical event against every state in which that event can occur. Otherwise, the model may pass normal-flow testing while failing under precisely the conditions that matter most.
