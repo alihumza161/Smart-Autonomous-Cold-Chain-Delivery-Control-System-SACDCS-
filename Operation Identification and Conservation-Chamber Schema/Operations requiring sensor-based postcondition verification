@@ -1,0 +1,5 @@
+1. OP-09 — Correct environment and verify recovery
+Issuing a cooling, heating, humidification, or dehumidification command does not prove that the environment has returned to its permitted range. The actuator may fail, the door may be open, or the thermal load may exceed the correction capability. Recovery must therefore be confirmed by fresh sensor readings against the active batch profile.
+2. OP-18 — Respond to door opening
+Sending a command to suspend conservation does not prove that the door is closed again or that the internal environment has recovered. The system must verify the door switch, sensor health, and environmental readings before allowing conservation to resume.
+The general engineering principle is that a command acknowledgement confirms receipt or processing of a command; it does not establish that the physical system achieved the intended result.
